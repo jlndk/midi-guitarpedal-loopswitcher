@@ -12,6 +12,13 @@ Increase if signal is noisy, decrease if there's no reaction from buttons.
 #define OUT_C PD4
 #define OUT_D PD5
 
+#define SWT_1 PB0
+#define SWT_2 PB1
+#define SWT_3 PB2
+#define SWT_4 PB3
+
+#define SWT_PROG PB4
+
 #define PROGRAMMER_LED PD6
 
 #include "lib/button.h"
@@ -26,31 +33,31 @@ void init() {
 }
 
 void handleProgrammingModeSwitches() {
-    if( button_is_pressed(&PINB, PB0) ) {
+    if( button_is_pressed(&PINB, SWT_1) ) {
         modifyPreset(0);
     }
-    else if( button_is_pressed(&PINB, PB1) ) {
+    else if( button_is_pressed(&PINB, SWT_2) ) {
         modifyPreset(1);
     }
-    else if( button_is_pressed(&PINB, PB2) ) {
+    else if( button_is_pressed(&PINB, SWT_3) ) {
         modifyPreset(2);
     }
-    else if( button_is_pressed(&PINB, PB3) ) {
+    else if( button_is_pressed(&PINB, SWT_4) ) {
         modifyPreset(3);
     }
 }
 
 void handlePlaybackModeSwitches () {
-    if( button_is_pressed(&PINB, PB0) ) {
+    if( button_is_pressed(&PINB, SWT_1) ) {
         setPreset(0);
     }
-    else if( button_is_pressed(&PINB, PB1) ) {
+    else if( button_is_pressed(&PINB, SWT_2) ) {
         setPreset(1);
     }
-    else if( button_is_pressed(&PINB, PB2) ) {
+    else if( button_is_pressed(&PINB, SWT_3) ) {
         setPreset(2);
     }
-    else if( button_is_pressed(&PINB, PB3) ) {
+    else if( button_is_pressed(&PINB, SWT_4) ) {
         setPreset(3);
     }
 }
@@ -62,7 +69,7 @@ void loop() {
         handlePlaybackModeSwitches();
     }
 
-    if( button_is_pressed(&PINB, PB4)) {
+    if( button_is_pressed(&PINB, SWT_PROG)) {
         toggleProgrammingMode();
     }
 
