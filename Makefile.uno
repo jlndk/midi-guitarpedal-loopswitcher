@@ -9,16 +9,16 @@
 #                is connected.
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
-DEVICE     = atmega2560
+DEVICE     = atmega328p
 CLOCK      = 1600000
-PROGRAMMER = -c wiring -P /dev/ttyACM0 -b 115200
+PROGRAMMER = -c arduino -P /dev/ttyACM0 -b 115200
 OBJECTS    = main.o
-FUSES 	= -U lfuse:w:0xff:m -U hfuse:w:0x3f:m -U efuse:w:0x0f:m
+FUSES 	= -U lfuse:w:0xe4:m -U hfuse:w:0xd9:m
 
 
 # Tune the lines below only if you know what you are doing:
 
-AVRDUDE = avrdude -C /opt/arduino/hardware/tools/avr/etc/avrdude.conf -D -F -V $(PROGRAMMER) -p $(DEVICE)
+AVRDUDE = avrdude -F -V $(PROGRAMMER) -p $(DEVICE)
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -std=c11
 
 # symbolic targets:

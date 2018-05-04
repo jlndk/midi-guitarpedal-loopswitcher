@@ -1,8 +1,8 @@
-void updateLoop(int state, int pin) {
+void updateLoop(int state, int pin, volatile *port) {
     if( state == 1 ) {
-        PORTD &= ~(1 << pin);
+        *port &= ~(1 << pin);
     }
     else {
-        PORTD |= (1 << pin);
+        *port |= (1 << pin);
     }
 }

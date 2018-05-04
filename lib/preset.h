@@ -22,10 +22,10 @@ void toggleProgrammingMode() {
     is_programming = !is_programming;
 
     if(is_programming) {
-        PORTD |= (1 << PROGRAMMER_LED);
+        PORTH |= (1 << PROGRAMMER_LED);
     }
     else {
-        PORTD &= ~(1 << PROGRAMMER_LED);
+        PORTH &= ~(1 << PROGRAMMER_LED);
     }
 }
 
