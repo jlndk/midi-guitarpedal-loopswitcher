@@ -2,34 +2,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-/*
-Defines how slow the input debouncer should be.
-Increase if signal is noisy, decrease if there's no reaction from buttons.
- */
-#define DEBOUNCE_SPEED 100
-#define OUT_A PE4
-#define OUT_A_PORT PORTE
-#define OUT_B PE5
-#define OUT_B_PORT PORTE
-#define OUT_C PG5
-#define OUT_C_PORT PORTG
-#define OUT_D PE3
-#define OUT_D_PORT PORTE
-
-#define SWT_1 PH5
-#define SWT_1_PORT PINH
-#define SWT_2 PH6
-#define SWT_2_PORT PINH
-#define SWT_3 PB4
-#define SWT_3_PORT PINB
-#define SWT_4 PB5
-#define SWT_4_PORT PINB
-
-#define SWT_PROG PB6
-#define SWT_PROG_PORT PINB
-
-#define PROGRAMMER_LED PH3
-
+#include "lib/definitions.h"
 #include "lib/button.h"
 #include "lib/preset.h"
 #include "lib/loop.h"
@@ -39,8 +12,10 @@ void init() {
     DDRH = 0xff;
     DDRE = 0xff;
     DDRG = 0xff;
+    DDRJ = 0xff;
 
     setPreset(current_preset);
+    updateModeLed();
 }
 
 void handleProgrammingModeSwitches() {
@@ -74,14 +49,14 @@ void handlePlaybackModeSwitches () {
 }
 
 void loop() {
-    if(is_programming) {
+    if(mode) {
         handleProgrammingModeSwitches();
     } else {
         handlePlaybackModeSwitches();
     }
 
     if( button_is_pressed(&SWT_PROG_PORT, SWT_PROG)) {
-        toggleProgrammingMode();
+        changeMode();
     }
 
     //Reflect internal state of the loop to the hardware
