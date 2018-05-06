@@ -1,7 +1,5 @@
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #include <util/delay.h>
-
 
 #include "lib/definitions.h"
 #include "lib/preset.h"

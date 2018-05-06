@@ -170,20 +170,20 @@ void togglePedalInPreset(int loop) {
  */
 void updateModeLed ()
 {
-    MODE_LED_RED_PORT &= ~(1 << MODE_LED_RED);
-    MODE_LED_GREEN_PORT &= ~(1 << MODE_LED_GREEN);
-    MODE_LED_BLUE_PORT &= ~(1 << MODE_LED_BLUE);
+    pin_set(1, MODE_LED_RED, &MODE_LED_RED_PORT);
+    pin_set(1, MODE_LED_GREEN, &MODE_LED_GREEN_PORT);
+    pin_set(1, MODE_LED_BLUE, &MODE_LED_BLUE_PORT);
 
 	switch (mode)
 	{
 		case 0:
-			MODE_LED_RED_PORT |= (1 << MODE_LED_RED);
+            pin_set(0, MODE_LED_RED, &MODE_LED_RED_PORT);
 			break;
 		case 1:
-			MODE_LED_BLUE_PORT |= (1 << MODE_LED_BLUE);
+            pin_set(0, MODE_LED_GREEN, &MODE_LED_GREEN_PORT);
 			break;
 		case 2:
-			MODE_LED_GREEN_PORT |= (1 << MODE_LED_GREEN);
+            pin_set(0, MODE_LED_BLUE, &MODE_LED_BLUE_PORT);
 			break;
 	}
 }
