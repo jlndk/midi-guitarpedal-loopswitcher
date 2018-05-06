@@ -12,7 +12,7 @@
 DEVICE     = atmega2560
 CLOCK      = 1600000
 PROGRAMMER = -c wiring -P /dev/ttyACM0 -b 115200
-OBJECTS    = main.o
+OBJECTS    = main.o lib/preset.o lib/switch.o lib/io.o
 FUSES 	= -U lfuse:w:0xff:m -U hfuse:w:0x3f:m -U efuse:w:0x0f:m
 
 
