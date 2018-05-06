@@ -105,11 +105,6 @@ void setPreset(int preset) {
     reflectPresetToHardware();
 }
 
-void togglePedalInPreset(int loop) {
-    presets[current_preset].states[loop] = !presets[current_preset].states[loop];
-    setPreset(current_preset);
-}
-
 void swapPedalsInPreset(int x, int y) {
     int tmpx = presets[current_preset].order[x];
     int tmpy = presets[current_preset].order[y];
@@ -160,6 +155,11 @@ void changeSelectedPedal(int dir)
     {
         selected_pedal = 0;
     }
+}
+
+void togglePedalInPreset(int loop) {
+    presets[current_preset].states[loop] = !presets[current_preset].states[loop];
+    setPreset(current_preset);
 }
 
 /**
