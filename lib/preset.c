@@ -55,6 +55,8 @@ int current_preset = 0;
 // 2 = Order Mode
 int mode = 0;
 
+int selected_pedal = 0;
+
 void updateGroup(int grp_pos, Path path) {
     //Write to pins according to status byte
     pin_set(path.first, grp_pins[grp_pos][0], grp_ports[grp_pos][0]);
@@ -108,6 +110,58 @@ void togglePedalInPreset(int loop) {
     setPreset(current_preset);
 }
 
+void swapPedalsInPreset(int x, int y) {
+    int tmpx = presets[current_preset].order[x];
+    int tmpy = presets[current_preset].order[y];
+    presets[current_preset].order[x] = tmpy;
+    presets[current_preset].order[y] = tmpx;
+}
+
+void movePedalInPreset (int dir)
+{
+    int swap_pedal = 0;
+
+    if(dir > 0) {
+        swap_pedal = selected_pedal + 1;
+    }
+    else {
+        swap_pedal = selected_pedal - 1;
+    }
+
+    //Prevent underflow/overflow
+    if(swap_pedal < 0 || swap_pedal == PEDAL_COUNT) {
+        return;
+    }
+
+    swapPedalsInPreset(selected_pedal, swap_pedal);
+
+    //Update the variable to the new location of the already selected pedal
+    selected_pedal = swap_pedal;
+
+    reflectPresetToHardware();
+}
+
+void changeSelectedPedal(int dir)
+{
+    if(dir)
+    {
+        selected_pedal++;
+    }
+    else
+    {
+        selected_pedal--;
+    }
+
+    if(selected_pedal > PEDAL_COUNT - 1)
+    {
+        selected_pedal = PEDAL_COUNT - 1;
+    }
+    else if(selected_pedal < 0)
+    {
+        selected_pedal = 0;
+    }
+}
+
 /**
  * Change color of RGB-LED to match mode
  * Red = playback
@@ -141,6 +195,10 @@ void changeMode() {
 	{
 		mode = 0;
     }
+
+    //Always reset editing parameters when modes are changed
+    selected_pedal = 0;
+
 	updateModeLed();
 }
 

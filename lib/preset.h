@@ -27,6 +27,24 @@ void changeMode();
 void setPreset(int preset);
 
 /**
+ * Moves the currently selected pedal according to the given direction.
+ *
+ * @param dir: The direction of the movement.
+ *             0: Back (Left)
+ *             1: Forward (Right)
+ */
+void movePedalInPreset(int dir);
+
+/**
+ * Change which pedal is selected according to the given direction.
+ *
+ * @param dir: The direction of the movement.
+ *             0: Back (Left)
+ *             1: Forward (Right)
+ */
+void changeSelectedPedal(int dir);
+
+/**
  * Activates/deactivates a given loop in the currently active preset
  *
  * @param loop: The index of the loop in the states array which should be
