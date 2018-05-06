@@ -62,7 +62,7 @@ void updateGroup(int grp_pos, Path path) {
     pin_set(path.second, grp_pins[grp_pos][2], grp_ports[grp_pos][2]);
 }
 
-void updateLoopOrder() {
+void updateOrder() {
     Preset preset = presets[current_preset];
 
     int prevPedal = 0;
@@ -77,15 +77,12 @@ void updateLoopOrder() {
         prevPedal = pedal + 1;
 	}
 
-    // int firstPedal = preset.order[ 0 ];
-    // updateGroup(0, pedals[firstPedal].path);
-
     //Update output group manually
     int lastPedal = preset.order[ PEDAL_COUNT - 1 ];
     updateGroup(lastPedal + 1, pedals[lastPedal].path);
 }
 
-void updateLoops() {
+void updateStates() {
     //Get current preset
     Preset preset = presets[current_preset];
 
@@ -94,13 +91,16 @@ void updateLoops() {
     pin_set(preset.states[1], OUT_B, &OUT_B_PORT);
     pin_set(preset.states[2], OUT_C, &OUT_C_PORT);
     pin_set(preset.states[3], OUT_D, &OUT_D_PORT);
+}
 
-    updateLoopOrder();
+void reflectPresetToHardware() {
+    updateStates();
+    updateOrder();
 }
 
 void setPreset(int preset) {
     current_preset = preset;
-    updateLoops();
+    reflectPresetToHardware();
 }
 
 void togglePedalInPreset(int loop) {
@@ -148,17 +148,15 @@ int getMode() {
     return mode;
 }
 
-void initPreset() {
+void initPresets() {
     for (int i = 0; i < PEDAL_COUNT; i++) {
         Preset preset = {
-            .order = {3,0,2,1},
+            .order = {0,1,2,3},
             .states = {0,0,0,0}
         };
 
         presets[i] = preset;
     }
-
-    setPreset(current_preset);
 }
 
 //Defaulting to ABCD, bypass all
@@ -173,6 +171,7 @@ void initPedals()
 void initHardware()
 {
     initPedals();
-    initPreset();
+    initPresets();
     updateModeLed();
+    reflectPresetToHardware();
 }
