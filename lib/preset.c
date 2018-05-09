@@ -13,7 +13,7 @@ struct Path {
 typedef struct Pedal Pedal;
 struct Pedal {
 	Path path;
-	unsigned char name;
+	char name;
 	unsigned int state : 2;
 };
 
@@ -21,6 +21,7 @@ typedef struct Preset Preset;
 struct Preset {
 	int order[PEDAL_COUNT];
 	int states[PEDAL_COUNT];
+	char name;
 };
 
 //List of pedal configurations.
@@ -206,11 +207,39 @@ int getMode() {
     return mode;
 }
 
+char getCurrentPresetName() {
+	return presets[current_preset].name;
+}
+
+char getSelectedPedalName() {
+	return pedals[selected_pedal].name;
+}
+
+char *getPedalOrderString() {
+	char *chars = (char *) malloc(sizeof(char) * PEDAL_COUNT + 1);
+
+	int x;
+
+	for (int i = 0; i < PEDAL_COUNT; i++) {
+		x = presets[current_preset].order[i];
+		chars[i] = pedals[x].name;
+	}
+
+    chars[PEDAL_COUNT] = '\0';
+
+
+	return chars;
+}
+
 void initPresets() {
+	char names[] = {
+		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+	};
     for (int i = 0; i < PEDAL_COUNT; i++) {
         Preset preset = {
             .order = {0,1,2,3},
-            .states = {0,0,0,0}
+            .states = {0,0,0,0},
+			.name = names[i]
         };
 
         presets[i] = preset;

@@ -13,6 +13,10 @@ void initHardware ();
  */
 int getMode();
 
+char getCurrentPresetName();
+char getSelectedPedalName();
+char *getPedalOrderString();
+
 /**
  * Iterates though the diffrent device modes.
  */

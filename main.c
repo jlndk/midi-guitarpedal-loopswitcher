@@ -5,6 +5,7 @@
 #include "lib/preset.h"
 #include "lib/io.h"
 #include "lib/switch.h"
+#include "lib/ui.h"
 
 void init() {
     DDRA = 0xff; //Set port as output
@@ -15,6 +16,7 @@ void init() {
     DDRG = 0xff; //Set port as output
     DDRJ = 0xff; //Set port as output
 
+    ui_init();
     initHardware();
 }
 
