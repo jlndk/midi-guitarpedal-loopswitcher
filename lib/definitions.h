@@ -25,24 +25,24 @@
  * Switches
  */
 //Switch 1
-#define SWT_1 PH5
-#define SWT_1_PORT PINH
+#define SWT_1 PE4
+#define SWT_1_PORT PINE
 
 //Switch 2
-#define SWT_2 PH6
-#define SWT_2_PORT PINH
+#define SWT_2 PE5
+#define SWT_2_PORT PINE
 
 //Switch 3
-#define SWT_3 PB4
-#define SWT_3_PORT PINB
+#define SWT_3 PG4
+#define SWT_3_PORT PING
 
 //Switch 4
-#define SWT_4 PB5
-#define SWT_4_PORT PINB
+#define SWT_4 PE3
+#define SWT_4_PORT PINE
 
 //Mode Switch
-#define SWT_PROG PB6
-#define SWT_PROG_PORT PINB
+#define SWT_PROG PH3
+#define SWT_PROG_PORT PINH
 
 /**
  * LEDS
